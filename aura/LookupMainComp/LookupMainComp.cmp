@@ -1,0 +1,31 @@
+<aura:component controller="LookupService">
+    <aura:handler name="searchTextEvnt" event="c:searchTextEvent" action="{!c.handleSearchEvnt}"/>
+     <aura:handler name="selectedRecordEvent" event="c:LookupSelectedRecordEvnt"  action="{!c.handleSelectedRecord}"/>
+    
+    <aura:attribute name="objName" type="string"  default="Account"/>
+    <aura:attribute name="searchField" type="string"  default="Name"/>
+    <aura:attribute name="iconName" type="string" default="standard:account" />
+    <aura:attribute name="recordList" type="Object" />
+    <aura:attribute name="selectedRecord" type="Object" />
+    <div>
+        <aura:if isTrue="{!v.selectedRecord == null}">
+           <c:LookupSearchComp />
+            <aura:set attribute="else">
+                <div class="slds-p-around_small">
+                
+                <lightning:pill label="{!v.selectedRecord.Name}" onremove="{! c.handleRemove }">
+                    <aura:set attribute="media">
+                        <lightning:icon iconName="{!v.iconName}"  alternativeText="{!v.iconName}"/>
+                    </aura:set>
+                 </lightning:pill>
+                   
+                </div>
+            </aura:set>
+       </aura:if>     
+    </div>
+    <div>
+       <aura:if isTrue="{!v.selectedRecord ==null}"> 
+          <c:LookupListComp recordList="{!v.recordList}" iconName="{!v.iconName}"/>
+      </aura:if>
+    </div>
+</aura:component>
